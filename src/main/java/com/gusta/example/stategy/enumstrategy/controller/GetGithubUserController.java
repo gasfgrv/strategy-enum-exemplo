@@ -21,7 +21,7 @@ public class GetGithubUserController {
 
     @GetMapping
     public ResponseEntity<?> getUser(@RequestParam String username) {
-        if (username == null) {
+        if (username == null || username.isEmpty()) {
             return getReponse(ResponseStrategy.RESPONSE_EMPTY, null);
         }
 

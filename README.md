@@ -13,6 +13,23 @@
 
 ## Como usar
 
+Baixar a imagem ou fazer o build dela:
+
+```shell
+# Baixar
+docker pull gustosilva/enum-strategy
+
+# Fazer o build
+mvn clean package -DskipTests # Caso não exista o jar pronto
+docker build -t gustosilva/enum-strategy .
+```
+
+Subir o container da API:
+
+```shell
+docker run -p 8080:8080 gustosilva/enum-strategy
+```
+
 Basta chamar o endpoint `/get-user?username={usuário do github}` e a API irá retornar a seguinte resposta:
 
 ````json

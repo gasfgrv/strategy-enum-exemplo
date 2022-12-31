@@ -1,7 +1,9 @@
 package com.gusta.example.stategy.enumstrategy.controller;
 
+import com.gusta.example.stategy.enumstrategy.dto.ErroDto;
 import com.gusta.example.stategy.enumstrategy.service.GetUserService;
-import feign.FeignException;
+import com.gusta.example.stategy.enumstrategy.utils.ResponseStrategy;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +22,22 @@ public class GetGithubUserController {
     private final GetUserService service;
 
     @GetMapping
-    public ResponseEntity<?> getUser(@RequestParam String username) {
-        if (username == null || username.isEmpty()) {
-            return getReponse(ResponseStrategy.RESPONSE_EMPTY, null);
+    public ResponseEntity<Object> getUser(@RequestParam String username) {
+        if (doesNotHaveUsername(username)) {
+            var error = new ErroDto(LocalDateTime.now(), "Please, pass a username for search");
+            return getReponse(ResponseStrategy.RESPONSE_EMPTY, error);
         }
 
-        try {
-            var user = service.getUser(username);
-            return getReponse(ResponseStrategy.RESPONSE_OK, user);
-        } catch (FeignException e) {
-            return getReponse(ResponseStrategy.RESPONSE_ERROR, null);
-        }
+        var user = service.getUser(username);
+
+        return getReponse(ResponseStrategy.RESPONSE_OK, user);
     }
 
-    private ResponseEntity<?> getReponse(ResponseStrategy responseType, Object body) {
+    private boolean doesNotHaveUsername(String username) {
+        return username == null || username.isEmpty();
+    }
+
+    private ResponseEntity<Object> getReponse(ResponseStrategy responseType, Object body) {
         return responseType.execute(body);
     }
 

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/get-user")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class GetGithubUserController {
 
@@ -23,7 +23,7 @@ public class GetGithubUserController {
 
     @GetMapping
     public ResponseEntity<Object> getUser(@RequestParam String username) {
-        if (doesNotHaveUsername(username)) {
+        if (!doesHaveUsername(username)) {
             var error = new ErroDto(LocalDateTime.now(), "Please, pass a username for search");
             return getReponse(ResponseStrategy.RESPONSE_EMPTY, error);
         }
@@ -33,7 +33,7 @@ public class GetGithubUserController {
         return getReponse(ResponseStrategy.RESPONSE_OK, user);
     }
 
-    private boolean doesNotHaveUsername(String username) {
+    private boolean doesHaveUsername(String username) {
         return username == null || username.isEmpty();
     }
 

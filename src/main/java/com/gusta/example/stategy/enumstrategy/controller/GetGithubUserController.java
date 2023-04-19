@@ -5,7 +5,6 @@ import com.gusta.example.stategy.enumstrategy.service.GetUserService;
 import com.gusta.example.stategy.enumstrategy.utils.ResponseStrategy;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -23,7 +21,7 @@ public class GetGithubUserController {
 
     @GetMapping
     public ResponseEntity<Object> getUser(@RequestParam String username) {
-        if (!doesHaveUsername(username)) {
+        if (doesNotHaveUsername(username)) {
             var error = new ErroDto(LocalDateTime.now(), "Please, pass a username for search");
             return getReponse(ResponseStrategy.RESPONSE_EMPTY, error);
         }
@@ -33,7 +31,7 @@ public class GetGithubUserController {
         return getReponse(ResponseStrategy.RESPONSE_OK, user);
     }
 
-    private boolean doesHaveUsername(String username) {
+    private boolean doesNotHaveUsername(String username) {
         return username == null || username.isEmpty();
     }
 

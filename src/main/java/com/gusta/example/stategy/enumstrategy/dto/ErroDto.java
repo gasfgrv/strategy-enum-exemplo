@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class ErroDto {
 
-    private LocalDateTime ErrorTimestamp;
+    private LocalDateTime errorTimestamp;
     private String errorMessage;
 
 }

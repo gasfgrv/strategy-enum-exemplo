@@ -32,7 +32,7 @@ Subir o container da API:
 docker run -p 8080:8080 gustosilva/enum-strategy
 ```
 
-Basta chamar o endpoint `/v1/users?username={usuário do github}` e a API irá retornar a seguinte resposta:
+Basta chamar o endpoint `/v1/users?username={usuário do github}` ou `/v2/users/{username}` e a API irá retornar a seguinte resposta:
 
 ````json
 {
